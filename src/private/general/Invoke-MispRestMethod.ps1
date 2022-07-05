@@ -73,7 +73,7 @@ function Invoke-MispRestMethod {
     # Build list of parameters to pass to Invoke-RestMethod
     $Request = @{
       Method = $Method
-      Uri = $Uri
+      Uri = $Uri.ToString()
       Headers = $Headers
     }
 
