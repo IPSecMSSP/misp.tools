@@ -47,7 +47,7 @@ function Search-MispAttribute {
     [PsCustomObject]$Context,
 
     [Parameter(Mandatory=$true)]
-    [string]$Search
+    [hastable]$Search
     )
 
   Begin {
@@ -65,7 +65,7 @@ function Search-MispAttribute {
 
     if ($PSCmdlet.ShouldProcess("Search MISP Attributes")) {
       # Call the API
-      $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Body $Search -Method 'POST'
+      $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Body ($Search | ConvertTo-Json -Depth 20) -Method 'POST'
 
       # Return all fo the events
       Write-Output $Response
