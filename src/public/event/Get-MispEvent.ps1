@@ -13,7 +13,7 @@ function Get-MispEvent {
         Id of a specific event
     .INPUTS
         [PsCustomObject]    -> Context
-        [Id]                -> BaseUri
+        [Int]               -> Id
     .OUTPUTS
         [Array]             -> Array of Events
     .EXAMPLE
@@ -32,17 +32,8 @@ function Get-MispEvent {
     [Parameter(Mandatory=$true)]
     [PsCustomObject]$Context,
 
-    [Parameter(Mandatory=$true)]
-    [ValidateScript({
-      $TypeName = $_ | Get-Member | Select-Object -ExpandProperty TypeName -Unique
-      if ($TypeName -eq 'System.String' -or $TypeName -eq 'System.UriBuilder') {
-        [System.UriBuilder]$_
-      }
-    })]
-    [System.UriBuilder]$Uri,
-
     [Parameter(Mandatory=$false)]
-    [switch]$NoValidateSsl
+    [Int]$Id
   )
 
   Begin {
