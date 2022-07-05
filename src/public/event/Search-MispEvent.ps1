@@ -65,7 +65,7 @@ function Search-MispEvent {
 
     if ($PSCmdlet.ShouldProcess("Search MISP Events")) {
       # Call the API
-      $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Body $Search
+      $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Body $Search -Method POST
 
       # Return all fo the events
       Write-Output $Response
