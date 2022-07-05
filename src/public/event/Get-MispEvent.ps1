@@ -34,7 +34,7 @@ function Get-MispEvent {
 
     [Parameter(Mandatory=$false)]
     [Int]$Id
-  )
+    )
 
   Begin {
     $Me = $MyInvocation.MyCommand.Name
@@ -42,18 +42,14 @@ function Get-MispEvent {
     Write-Verbose "$($Me): Get MISP Event(s)"
 
     $Uri = $Context.BaseUri
+    $Uri.Path = [io.path]::combine($Uri.Path, "events")
 
     if ($MyInvocation.BoundParameters.ContainsKey("Id")) {
-      $Uri.Path += "/events/$($Id)"
-
-    } else {
-      $Uri.Path += "/events"
+      $Uri.Path = [io.path]::combine($Uri.Path, $Id)
     }
   }
 
   Process {
-    # Set SSL Preferences/Certificate Trust Policy
-    Enable-TrustAllCertsPolicy
 
     $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri
 

@@ -67,6 +67,9 @@ function Invoke-MispRestMethod {
 
   Process {
 
+    # Set SSL Preferences/Certificate Trust Policy
+    Enable-TrustAllCertsPolicy -NoValidateSsl $Context.NoValidateSsl
+
     # Build list of parameters to pass to Invoke-RestMethod
     $Request = @{
       Method = $Method
