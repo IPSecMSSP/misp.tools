@@ -41,6 +41,8 @@ function Get-MispEvent {
 
     Write-Verbose "$($Me): Get MISP Event(s)"
 
+    $Uri = $Context.BaseUri
+
     if ($MyInvocation.BoundParameters.ContainsKey("Id")) {
       $Uri.Path += "/events/$($Id)"
 
