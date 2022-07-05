@@ -1,5 +1,5 @@
 # Set MISP API Key/URI Context
-function Get-MispEvent {
+function Get-MispAttribute {
     <#
     .SYNOPSIS
         Get MISP Attribute(s)

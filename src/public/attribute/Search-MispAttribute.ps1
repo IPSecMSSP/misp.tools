@@ -1,5 +1,5 @@
 # Set MISP API Key/URI Context
-function Search-MispEvent {
+function Search-MispAttribute {
     <#
     .SYNOPSIS
         Search for MISP Event(s)
