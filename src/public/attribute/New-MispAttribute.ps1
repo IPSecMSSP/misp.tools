@@ -121,6 +121,7 @@ function New-MispAttribute {
       type = $Type
       category = $Category
       distribution = $DistributionMap.($Distribution)
+      to_ids = $true
       comment = $Comment
       value = $Value
     }
