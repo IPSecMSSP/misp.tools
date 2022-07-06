@@ -58,7 +58,7 @@ function New-MispEvent {
   Begin {
     $Me = $MyInvocation.MyCommand.Name
 
-    Write-Verbose "$($Me): Get MISP Event(s)"
+    Write-Verbose "$($Me): Create new MISP Event(s)"
 
     # If we don't "Clone" the UriBuilder object from the Context, the Context's instance of the BaseUri gets updated. We do not want that.
     $Uri = [System.UriBuilder]$Context.BaseUri.ToString()
@@ -103,6 +103,8 @@ function New-MispEvent {
     if($MyInvocation.BoundParameters.ContainsKey("Attribute")) {
       $EventBody | Add-Member -MemberType NoteProperty -Name 'Attribute' -Value $Attribute
     }
+
+    Write-Debug "Event Body:`n$($EventBody | ConvertTo-Json -Depth 10)"
 
     # Call the API
     $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Method "POST" -Body $EventBody
