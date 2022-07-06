@@ -18,6 +18,7 @@ function Invoke-MispRestMethod {
         [PSCredential]        -> Credential
         [System.Uri.Builder]  -> BaseUri
         [Switch]              -> NoValidateSsl
+        [string]              -> Method (Post, Get, Put, Delete)
     .OUTPUTS
         [PSCustomObject]      -> MISP Context
     .EXAMPLE
