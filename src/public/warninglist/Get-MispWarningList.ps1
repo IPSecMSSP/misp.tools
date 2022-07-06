@@ -80,7 +80,7 @@ function Get-MispWarningList {
     Write-Verbose "$($Me): Invoking with ParameterSetName: $($PSCmdlet.ParameterSetName)"
     # Call the API
     if ($PSCmdlet.ParameterSetName -eq 'Criteria') {
-      $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Method 'POST' -Body $Criteria
+      $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Method 'POST' -Body ($Criteria | ConvertTo-Json)
     } else {
       $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri
     }
