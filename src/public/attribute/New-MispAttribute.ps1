@@ -102,16 +102,7 @@ function New-MispAttribute {
   Begin {
     $Me = $MyInvocation.MyCommand.Name
 
-    Write-Verbose "$($Me): Get MISP Attribute(s)"
-
-    # If we don't "Clone" the UriBuilder object from the Context, the Context's instance of the BaseUri gets updated. We do not want that.
-    $Uri = [System.UriBuilder]$Context.BaseUri.ToString()
-    $Uri.Path = [io.path]::combine($Uri.Path, "attributes")
-
-    # Append the Event Id if requested
-    if ($MyInvocation.BoundParameters.ContainsKey("Id")) {
-      $Uri.Path = [io.path]::combine($Uri.Path, "view/$($Id)")
-    }
+    Write-Verbose "$($Me): Build New MISP Attribute(s)"
 
     $DistributionMap = @{
       Organisation = 0      # Your organisation only
