@@ -30,6 +30,10 @@ function Search-MispAttribute {
     .OUTPUTS
         [Array]             -> Array of Events
     .EXAMPLE
+        PS> $Search = @{
+          returnFormat = "json"
+          value = 8.8.8.8
+        }
         PS> $Attributes = Search-MispAttribute -Context $MispContext -Search $Search
         Return matching attributes
     .LINK
