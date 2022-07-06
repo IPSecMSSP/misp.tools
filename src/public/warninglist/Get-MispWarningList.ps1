@@ -87,7 +87,7 @@ function Get-MispWarningList {
 
     if ($MyInvocation.BoundParameters.ContainsKey("Id")) {
       # Only a single event was requested
-      Write-Output $Response
+      Write-Output $Response.WarningList
     } else {
       # Return all fo the events
       Write-Output $Response.WarningLists
