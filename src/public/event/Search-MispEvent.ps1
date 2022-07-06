@@ -47,7 +47,7 @@ function Search-MispEvent {
     [PsCustomObject]$Context,
 
     [Parameter(Mandatory=$true)]
-    [hastable]$Search
+    [hashtable]$Search
     )
 
   Begin {
