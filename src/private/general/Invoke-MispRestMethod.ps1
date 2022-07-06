@@ -80,7 +80,7 @@ function Invoke-MispRestMethod {
 
     # Add body if supplied
     if ($MyInvocation.BoundParameters.ContainsKey("Body")) {
-      $Request.Add('Body', $Body)
+      $Request.Add('Body', ($Body | ConvertTo-Json -Depth 10))
     }
 
     # There's some altered handling of "Content-Type" Header in some PowerShell 7.2 releases where ContentType Parameter has to be passed instead or in addition
