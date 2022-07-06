@@ -16,8 +16,8 @@ function Get-MispWarningList {
 
         Available Criteria are:
         - enabled
-        - category
-        - type
+
+        Any criteria other than 'enabled' are ignored by the API
     .INPUTS
         [PsCustomObject]    -> Context
         [Int]               -> Id
@@ -87,10 +87,10 @@ function Get-MispWarningList {
 
     if ($MyInvocation.BoundParameters.ContainsKey("Id")) {
       # Only a single event was requested
-      Write-Output $Response.WarningList
+      Write-Output $Response.warningList
     } else {
       # Return all fo the events
-      Write-Output $Response.WarningLists
+      Write-Output $Response.warninglists.warninglist
     }
 
   }
