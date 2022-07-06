@@ -7,8 +7,6 @@ function New-MispAttribute {
         Construct a new MISP Attribute(s)
 
         The Attribute will be able to be added to an new Event, or added to an existing Event
-    .PARAMETER Context
-        PSCustomObject with containing the MISP Context
     .PARAMETER Category
         The category that the Attribute belogs to.
 
@@ -66,9 +64,6 @@ function New-MispAttribute {
   [CmdletBinding()]
 
   param (
-    [Parameter(Mandatory=$true)]
-    [PsCustomObject]$Context,
-
     [Parameter(Mandatory=$false)]
     [ValidateSet("Internal reference", "Targeting data", "Antivirus detection", "Payload delivery", "Artifacts dropped", "Payload installation", "Persistence mechanism", "Network activity", `
       "Payload type", "Attribution", "External analysis", "Financial fraud", "Support Tool", "Social network", "Person", "Other")]
