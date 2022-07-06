@@ -101,7 +101,7 @@ function New-MispEvent {
 
     # If attributes were supplied, add these too
     if($MyInvocation.BoundParameters.ContainsKey("Attribute")) {
-      $EventBody.Add('Attribute', $Attribute)
+      $EventBody | Add-Member -MemberType NoteProperty -Name 'Attribute' -Value $Attribute
     }
 
     # Call the API
