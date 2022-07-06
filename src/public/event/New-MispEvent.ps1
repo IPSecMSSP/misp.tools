@@ -100,7 +100,7 @@ function New-MispEvent {
     }
 
     # If attributes were supplied, add these too
-    if($MyInvocation.BoundParameters.Contains("Attribute")) {
+    if($MyInvocation.BoundParameters.ContainsKey("Attribute")) {
       $EventBody.Add('Attribute', $Attribute)
     }
 
