@@ -63,7 +63,7 @@ function Get-MispWarningList {
   Begin {
     $Me = $MyInvocation.MyCommand.Name
 
-    Write-Verbose "$($Me): Get MISP Event(s)"
+    Write-Verbose "$($Me): Get MISP Warning List(s)"
 
     # If we don't "Clone" the UriBuilder object from the Context, the Context's instance of the BaseUri gets updated. We do not want that.
     $Uri = [System.UriBuilder]$Context.BaseUri.ToString()
@@ -77,8 +77,13 @@ function Get-MispWarningList {
 
   Process {
 
+    Write-Verbose "$($Me): Invoking with ParameterSetName: $($PSCmdlet.ParameterSetName)"
     # Call the API
-    $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri
+    if ($PSCmdlet.ParameterSetName -eq 'Criteria') {
+      $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Method 'POST' -Body $Criteria
+    } else {
+      $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri
+    }
 
     if ($MyInvocation.BoundParameters.ContainsKey("Id")) {
       # Only a single event was requested
