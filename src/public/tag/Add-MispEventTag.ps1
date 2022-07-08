@@ -72,7 +72,7 @@ function Add-MispEventTag {
   Process {
 
     # Call the API
-    $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri
+    $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Method 'POST'
 
     Write-Debug $Response | ConvertTo-Json -Depth 10
 
