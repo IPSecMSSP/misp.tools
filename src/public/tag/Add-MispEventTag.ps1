@@ -74,6 +74,8 @@ function Add-MispEventTag {
     # Call the API
     $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri
 
+    Write-Debug $Response | ConvertTo-Json -Depth 10
+
     if (!$Response.saved) {
       Write-Warning "Unable to add tag to Event"
     }

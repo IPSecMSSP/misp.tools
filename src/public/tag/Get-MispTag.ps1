@@ -76,12 +76,12 @@ function Get-MispTag {
 
     if ($MyInvocation.BoundParameters.ContainsKey("Id")) {
       # Only a single event was requested
-      Write-Output $Response.Tag
-    } elseif ($PSCmdlet.ParameterSetName -eq 'ByCriteria') {
       Write-Output $Response
+    } elseif ($PSCmdlet.ParameterSetName -eq 'ByCriteria') {
+      Write-Output $Response.Tag
     } else {
       # Return all fo the events
-      Write-Output $Response
+      Write-Output $Response.Tag
     }
 
   }
