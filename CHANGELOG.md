@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Save-MispContext
 - Read-MispContext
 - Invoke-MispRestMethod
+- Get-MispEvent
+- Search-MispEvent
+- Get-MispAttribute
+- Search-Misp-Attribute
+- New-MispAttribute
+- New-MispEvent
+- Get-MispWarningList
+- Get-MispTag
+- Add-MispEventTag
+- Add-MispAttributeTag
 
 ### Changed
 
