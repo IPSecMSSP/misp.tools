@@ -89,6 +89,8 @@ Add-BuildTask Compile {
   $PublicFunctions = Get-ChildItem -Path $SourceDirectory\public -Recurse -Directory | Get-ChildItem -Include *.ps1 -File -Recurse
   $PrivateFunctions = Get-ChildItem -Path $SourceDirectory\private -Recurse -Directory | Get-ChildItem -Include *.ps1 -File
 
+  Get-Content -Path "$SourceDirectory\$($Module.BaseName).psm1" | Add-Content -Path $DestinationModule
+
   if ($PrivateFunctions) {
     Write-Output "Found $($PrivateFunctions.Count) Private functions, will compile these into the root module file."
     Foreach ($PrivateFunction in $PrivateFunctions) {

@@ -8,10 +8,10 @@ $PublicFunctions = @(Get-ChildItem -Path $PSScriptRoot\public -Recurse -Filter "
 
 $ModuleName = 'MISP.Tools'
 
-$Script:DefaultMispPreferencePath = Join-Path -Path ([System.Environment]::GetFolderPath('LocalApplicationData')) -ChildPath $ModuleName
-$Script:DefaultMispPreferenceFilename = 'MISPContext.xml'
+$DefaultMispPreferencePath = Join-Path -Path ([System.Environment]::GetFolderPath('LocalApplicationData')) -ChildPath $ModuleName
+$DefaultMispPreferenceFilename = 'MISPContext.xml'
 
-Write-Verbose "Default Preference Path: $($Private:DefaultMispPreferencePath); Default Preference Filename: $($Private:DefaultMispPreferenceFilename)"
+Write-Verbose "Default Preference Path: $($DefaultMispPreferencePath); Default Preference Filename: $($DefaultMispPreferenceFilename)"
 
 # Dot source the private function files.
 foreach ($ImportItem in $PrivateFunctions) {
@@ -37,3 +37,4 @@ foreach ($ImportItem in $PublicFunctions) {
 
 # Export the public functions.
 Export-ModuleMember -Function $PublicFunctions.BaseName
+Export-ModuleMember -Variable DefaultMispPreferenceFilename, DefaultMispPreferencePath
