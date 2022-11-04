@@ -27,7 +27,7 @@ function New-MispEvent {
         https://www.circl.lu/doc/misp/automation/#events-management
     #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess)]
 
   param (
     [Parameter(Mandatory=$true)]
@@ -46,7 +46,7 @@ function New-MispEvent {
 
     [Parameter(Mandatory=$false)]
     [ValidateSet("Organisation","Community","Connected","All","Group","Inherit")]
-    [string]$Distribution = "Organisaton",
+    [string]$Distribution = "Organisation",
 
     [Parameter(Mandatory=$false)]
     [System.Boolean]$Published = $false,
@@ -106,8 +106,10 @@ function New-MispEvent {
 
     Write-Debug "Event Body:`n$($EventBody | ConvertTo-Json -Depth 10)"
 
-    # Call the API
-    $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Method "POST" -Body $EventBody
+    If ($PSCmdlet.ShouldProcess("Create new MISP Event")) {
+      # Call the API
+      $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Method "POST" -Body $EventBody
+    }
 
     Write-Output $Response.Event
 

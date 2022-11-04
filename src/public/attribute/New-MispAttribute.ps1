@@ -11,7 +11,7 @@ function New-MispAttribute {
         The category that the Attribute belogs to.
 
         One of:
-        - Internal feference
+        - Internal reference
         - Targeting data
         - Antivirus detection
         - Payload delivery
@@ -61,7 +61,7 @@ function New-MispAttribute {
         https://www.circl.lu/doc/misp/automation/#attribute-management
     #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess)]
 
   param (
     [Parameter(Mandatory=$false)]
@@ -90,7 +90,7 @@ function New-MispAttribute {
 
     [Parameter(Mandatory=$false)]
     [ValidateSet("Organisation","Community","Connected","All","Group","Inherit")]
-    [string]$Distribution = "Organisaton",
+    [string]$Distribution = "Organisation",
 
     [Parameter(Mandatory=$true)]
     [string] $Comment,
@@ -116,19 +116,20 @@ function New-MispAttribute {
 
   Process {
 
-    # Build the Attribute Body
-    $Attribute = @{
-      type = $Type
-      category = $Category
-      distribution = $DistributionMap.($Distribution)
-      to_ids = $true
-      comment = $Comment
-      value = $Value
+    if ($PSCmdlet.ShouldProcess("Construct New MISP Attribute")) {
+      # Build the Attribute Body
+      $Attribute = @{
+        type = $Type
+        category = $Category
+        distribution = $DistributionMap.($Distribution)
+        to_ids = $true
+        comment = $Comment
+        value = $Value
+      }
+
+      # Return all for the events
+      Write-Output $Attribute
     }
-
-    # Return all fo the events
-    Write-Output $Attribute
-
   }
 
   End {
