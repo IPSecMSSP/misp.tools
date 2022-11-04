@@ -49,7 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known Issues
 
-- [#1](https://url.to.repo/repo/path/-/issues/1) Documentation is somewhat lacking
+- [#1](https://github.com/IPSecMSSP/misp.tools/-/issues/1) Documentation is somewhat lacking
 
-[Unreleased]: https://url.to.repo/repo/path/
-[0.0.1]: https://url.to.repo/repo/path/-/releases/v0.0.1
+[Unreleased]: https://github.com/IPSecMSSP/misp.tools
+[0.0.1]: https://github.com/IPSecMSSP/misp.tools/-/releases/v0.0.1
