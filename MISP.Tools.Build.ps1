@@ -1,3 +1,18 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','')]
+param(
+  [Parameter(Mandatory=$False)]
+  [string]$CertificateName = 'IPSec SOC Internal Code Signing',
+
+  [Parameter(Mandatory=$False)]
+  [string]$CertificateStore = 'LocalMachine',
+
+  [Parameter(Mandatory=$False)]
+  [string]$CertificateLocation = 'MY',
+
+  [Parameter(Mandatory=$False)]
+  [string]$PSGalleryAPIKey = $Env:PSGalleryAPIKey
+)
+
 # Task for installing Pester if not present.
 Add-BuildTask EnsurePester {
   if (!(Get-InstalledModule -Name Pester -MinimumVersion '5.2.0')) {
@@ -51,7 +66,7 @@ Add-BuildTask Manifest {
   $SourceDirectory = "$BuildRoot\src"
   $Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
 
-  $PublicFunctions = Get-ChildItem -Path $SourceDirectory -Include 'public' -Recurse -Directory | Get-ChildItem -Include *.ps1 -File
+  $PublicFunctions = Get-ChildItem -Path ($SourceDirectory + '/public') -Recurse -Directory | Get-ChildItem -Include *.ps1 -File
   $PublicFunctionNames = $PublicFunctions | Select-String -Pattern 'function (\w+-\w+) {' -AllMatches | ForEach-Object { $_.Matches.Groups[1].Value }
 
   Write-Output "Updating Module Manifest with exportable functions. Adding $($PublicFunctionNames.Count) functions via Update-ModuleManifest"
@@ -88,6 +103,8 @@ Add-BuildTask Compile {
   $DestinationModule = "$BuildDirectory\$($Module.BaseName).psm1"
   $PublicFunctions = Get-ChildItem -Path $SourceDirectory\public -Recurse -Directory | Get-ChildItem -Include *.ps1 -File -Recurse
   $PrivateFunctions = Get-ChildItem -Path $SourceDirectory\private -Recurse -Directory | Get-ChildItem -Include *.ps1 -File
+
+  Get-Content -Path "$SourceDirectory\$($Module.BaseName).psm1" | Add-Content -Path $DestinationModule
 
   if ($PrivateFunctions) {
     Write-Output "Found $($PrivateFunctions.Count) Private functions, will compile these into the root module file."
@@ -143,6 +160,18 @@ Add-BuildTask GenerateHelp EnsurePlatyPS, {
   }
 }
 
+# Task to sign the 'Compiled' Module using the specified, or default Signing Key
+Add-BuildTask Sign Compile, {
+  $SourceDirectory = "$BuildRoot\src"
+  $Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
+  $BuildDirectory = "$BuildRoot\build\$($Module.BaseName)"
+
+  $CertificatePath = "Cert:\{0}\{1}" -f $CertificateStore, $CertificateLocation
+  $Certificate = Get-ChildItem $CertificatePath -CodeSigningCert | Where-object -Property Subject -Match $CertificateName
+
+  $null = Get-ChildItem $BuildDirectory -File -Recurse -Include *.ps1, *.ps1xml, *.psd1, *.psm1, *.pssc, *.psrc, *.cdxml | Set-AuthenticodeSignature -HashAlgorithm SHA256 -Certificate $Certificate -TimestampServer http://timestamp.digicert.com
+}
+
 # Main 'Build' task to run all preceding tasks and package the module ready for production.
 Add-BuildTask Build Clean, Test, Compile, GenerateHelp
 
@@ -150,18 +179,18 @@ Add-BuildTask Build Clean, Test, Compile, GenerateHelp
 Add-BuildTask . Build
 
 # Task for publishing the built module to the PowerShell Gallery, which will also run a build.
-Add-BuildTask Publish Build, {
+Add-BuildTask Publish Build, Sign, {
   $SourceDirectory = "$BuildRoot\src"
   $Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
   $BuildDirectory = "$BuildRoot\build\$($Module.BaseName)"
   $Manifest = Import-PowerShellDataFile -Path $Module.FullName
   $ModuleVersion = $Manifest.ModuleVersion
 
-  Assert-Build ($env:PSGalleryAPIKey) "PowerShell Gallery API Key environment variable not found!"
+  Assert-Build ($PSGalleryAPIKey) "PowerShell Gallery API Key Parameter not found!"
   Try {
     $Params = @{
       Path        = "$BuildDirectory"
-      NuGetApiKey = $env:PSGalleryAPIKey
+      NuGetApiKey = $PSGalleryAPIKey
       ErrorAction = "Stop"
     }
     Publish-Module @Params
@@ -172,4 +201,3 @@ Add-BuildTask Publish Build, {
   }
 
 }
-

@@ -5,11 +5,14 @@ Function Enable-TrustAllCertsPolicy {
         Trust all SSL certificates even if self-signed, and set protocol to Tls 1.2.
     #>
     [CmdletBinding()]
-    Param()
+    Param(
+      [Parameter(Mandatory=$False)]
+      [switch]$NoValidateSsl
+    )
 
     $Me = $MyInvocation.MyCommand.Name
 
-    Write-Verbose "$($me): Setting TLS Preferences with Certificate Validation: $(!$Script:MispContext.NoValidateSsl)"
+    Write-Verbose "$($me): Setting TLS Preferences with Certificate Validation: $(!$NoValidateSsl)"
     # Establish Certification Policy Exception
     $PSDesktopException = @"
     using System.Net;
@@ -26,7 +29,7 @@ Function Enable-TrustAllCertsPolicy {
     # Set PowerShell to TLS1.2
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
 
-    if ($Script:MispContext.NoValidateSsl) {
+    if ($NoValidateSsl) {
         if ($PSEdition -ne 'Core'){
             if (-Not ("TrustAllCertsPolicy" -as [type])) {
                 Write-Verbose "$($Me): [Enable-TrustAllCertsPolicy]: Cert Policy is not enabled. Enabling."

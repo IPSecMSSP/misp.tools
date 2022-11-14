@@ -25,7 +25,7 @@ function New-MispContext {
         https://url.to.repo/repo/path/
     #>
 
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess)]
 
   param (
     [Parameter(Mandatory=$true)]
@@ -60,7 +60,9 @@ function New-MispContext {
   Process {
     # Set SSL Preferences/Certificate Trust Policy
     Enable-TrustAllCertsPolicy
-    Write-Output $MispContext
+    if ($PSCmdlet.ShouldProcess($MispContext)) {
+      Write-Output $MispContext
+    }
 
   }
 

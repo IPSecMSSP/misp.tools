@@ -43,13 +43,13 @@ function Save-MispContext {
       ValueFromPipeline = $false,
       Position = 1
     )]
-    [string] $DestinationPath = $Script:DefaultMispPreferencePath,
+    [string] $DestinationPath = $DefaultMispPreferencePath,
     [Parameter(
       Mandatory = $false,
       ValueFromPipeline = $false,
       Position = 2
     )]
-    [string] $Filename = $Script:DefaultMispPreferenceFilename
+    [string] $Filename = $DefaultMispPreferenceFilename
   )
 
   Begin {
