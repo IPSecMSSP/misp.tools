@@ -15,7 +15,7 @@ function Read-MispContext {
         [String]          -> Path
         [String]          -> Filename
     .OUTPUTS
-        [PSCustomObject]  -> MISP Context into $Script:MispContext
+        [PSCustomObject]  -> MISP Context into $MispContext
     .EXAMPLE
         PS > $MispContext = Read-MispContext
     .EXAMPLE
@@ -32,13 +32,13 @@ function Read-MispContext {
       ValueFromPipeline = $false,
       Position = 0
     )]
-    [string] $Path = $Script:DefaultMispPreferencePath,
+    [string] $Path = $DefaultMispPreferencePath,
     [Parameter(
       Mandatory = $false,
       ValueFromPipeline = $false,
       Position = 1
     )]
-    [string] $Filename = $Script:DefaultMispPreferenceFilename
+    [string] $Filename = $DefaultMispPreferenceFilename
   )
 
   Begin {

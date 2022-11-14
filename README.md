@@ -4,7 +4,7 @@ PowerShell module for interaction with MISP (Malware Information Sharing Platfor
 
 ## Overview
 
-MISP.Tools provides various functions for interacting with the MISP REST APIs to assist with the automation of Event Submission, Indicator of Comprimise Lookups and other activities.
+MISP.Tools provides various functions for interacting with the MISP REST APIs to assist with the automation of Event Submission, Indicator of Compromise Lookups and other activities.
 
 This module was created because there were no suitable PowerShell alternatives that provided the required functionality for my needs.
 

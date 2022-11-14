@@ -18,6 +18,7 @@ function Invoke-MispRestMethod {
         [PSCredential]        -> Credential
         [System.Uri.Builder]  -> BaseUri
         [Switch]              -> NoValidateSsl
+        [string]              -> Method (Post, Get, Put, Delete)
     .OUTPUTS
         [PSCustomObject]      -> MISP Context
     .EXAMPLE
@@ -67,16 +68,19 @@ function Invoke-MispRestMethod {
 
   Process {
 
+    # Set SSL Preferences/Certificate Trust Policy
+    Enable-TrustAllCertsPolicy -NoValidateSsl:$Context.NoValidateSsl
+
     # Build list of parameters to pass to Invoke-RestMethod
     $Request = @{
       Method = $Method
-      Uri = $Uri
+      Uri = $Uri.ToString()
       Headers = $Headers
     }
 
     # Add body if supplied
     if ($MyInvocation.BoundParameters.ContainsKey("Body")) {
-      $Request.Add('Body', $Body)
+      $Request.Add('Body', ($Body | ConvertTo-Json -Depth 10))
     }
 
     # There's some altered handling of "Content-Type" Header in some PowerShell 7.2 releases where ContentType Parameter has to be passed instead or in addition
