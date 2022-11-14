@@ -1,5 +1,5 @@
 # Define common module info variables.
-$ModuleName = "Misp.Tools"
+$ModuleName = "MISP.Tools"
 $ModuleManifestName = "$ModuleName.psd1"
 $ModuleManifestPath = "$PSScriptRoot\..\src\$ModuleManifestName"
 

@@ -39,5 +39,5 @@ Contexts may be saved to disk, using either default locations and filenames, or 
 
 ### SEE ALSO
 
-{{ See also placeholder }}
-{{ You can also list related articles, blogs, and video URLs. }}
+[MISP.Tools Project](https://github.com/IPSecMSSP/misp.tools)
+[MIPS.Tools on PowerShell Gallery](https://www.powershellgallery.com/packages/MISP.Tools)
