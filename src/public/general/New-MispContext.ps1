@@ -60,7 +60,7 @@ function New-MispContext {
   Process {
     # Set SSL Preferences/Certificate Trust Policy
     Enable-TrustAllCertsPolicy
-    if ($PSCmdlet.ShouldProcess($MispContext.BaseUri)) {
+    if ($PSCmdlet.ShouldProcess($MispContext.BaseUri), "Create new MISP Context") {
       Write-Output $MispContext
     }
 
