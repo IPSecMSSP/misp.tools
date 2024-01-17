@@ -1,13 +1,29 @@
 {
   "threshold": 50,
   "reporters": [
-    "consoleFull"
+    "html",
+    "markdown"
   ],
   "ignore": [
-    "**/__snapshots__/**"
-  ],
-  "exclude": [
-    "**/*.json"
-  ],
-  "absolute": true
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/.rbenv/**",
+    "**/.venv/**",
+    "**/report/**",
+    "**/megalinter-reports/**",
+    "**/hardis-report/**",
+    "**/*cache*/**",
+    "**/*.json",
+    "**/*.ps1",
+    "**/*.yaml",
+    "**/*.yml",
+    "**/*.md",
+    "**/*.html",
+    "**/*.xml",
+    "**/*.jpg",
+    "**/*.png",
+    "**/*.svg",
+    "**/*.zip",
+    "**/*.bin"
+  ]
 }
