@@ -26,7 +26,7 @@ function Add-MispAttributeTag {
       PS> $Tags = Add-MispAttributeTag -Context $MispContext -AttributeId 1234 -TagId 69 -Local
       Add Tag with Id 69 to attribute Id 1234, locally
   .LINK
-      https://url.to.repo/repo/path/
+      https://github.com/IPSecMSSP/misp.tools
       https://www.circl.lu/doc/misp/automation/#attribute-management
   #>
 

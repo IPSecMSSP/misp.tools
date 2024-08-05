@@ -12,7 +12,7 @@
 RootModule = 'MISP.Tools.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.2'
+ModuleVersion = '1.0.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -24,10 +24,10 @@ GUID = '3334c5ed-275f-43e9-9064-7f27e0a197bd'
 Author = 'John Berkers'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'IPSec Pty Ltd'
 
 # Copyright statement for this module
-Copyright = '(c) John Berkers. All rights reserved.'
+Copyright = '(c) IPSec Pty Ltd. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'This module assists organisations using PowerShell to interface to the MISP.'
@@ -104,7 +104,7 @@ PrivateData = @{
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/IPSecMSSP/misp.tools'
 
         # A URL to an icon representing this module.
         # IconUri = ''

@@ -25,7 +25,7 @@ function Save-MispContext {
         Save to default location with alternate filename
         PS > $MispContext | Save-MispContext -Filename 'MyMISP.xml'
     .LINK
-        https://url.to.repo/repo/path/
+        https://github.com/IPSecMSSP/misp.tools
     #>
 
   [CmdletBinding(SupportsShouldProcess)]

@@ -29,7 +29,7 @@ function Get-MispTag {
         PS> $Event = Get-MispTag -Context $MispContext -Criteria '%banana%'
         Return all tags containing the text 'banana'
     .LINK
-        https://url.to.repo/repo/path/
+        https://github.com/IPSecMSSP/misp.tools
         https://www.circl.lu/doc/misp/automation/#attribute-management
     #>
 
