@@ -21,7 +21,7 @@ function Read-MispContext {
     .EXAMPLE
         PS > $MispContext = Read-MispContext -Filename 'MyMISP.xml'
     .LINK
-        https://url.to.repo/repo/path/
+        https://github.com/IPSecMSSP/misp.tools
     #>
 
   [CmdletBinding()]

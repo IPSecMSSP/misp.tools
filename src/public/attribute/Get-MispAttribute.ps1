@@ -23,7 +23,7 @@ function Get-MispAttribute {
         PS> $Event = Get-MispAttribute -Context $MispContext -Id 1234
         Return details for attribute 1234
     .LINK
-        https://url.to.repo/repo/path/
+        https://github.com/IPSecMSSP/misp.tools
         https://www.circl.lu/doc/misp/automation/#attribute-management
     #>
 

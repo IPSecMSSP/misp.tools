@@ -22,7 +22,7 @@ function New-MispContext {
     .EXAMPLE
         PS> $MispContext = New-MispContext -Credential (Get-Credential -Username 'MISP Api Key') -BaseUri 'https://misp.domain.com'
     .LINK
-        https://url.to.repo/repo/path/
+        https://github.com/IPSecMSSP/misp.tools
     #>
 
   [CmdletBinding(SupportsShouldProcess)]

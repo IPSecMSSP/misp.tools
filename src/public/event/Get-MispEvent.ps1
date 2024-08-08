@@ -23,7 +23,7 @@ function Get-MispEvent {
         PS> $Event = Get-MispEvent -Context $MispContext -Id 1234
         Return details for event 1234
     .LINK
-        https://url.to.repo/repo/path/
+        https://github.com/IPSecMSSP/misp.tools
         https://www.circl.lu/doc/misp/automation/#events-management
     #>
 
