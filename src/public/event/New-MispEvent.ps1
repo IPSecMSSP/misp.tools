@@ -1,6 +1,6 @@
 # Set MISP API Key/URI Context
 function New-MispEvent {
-    <#
+  <#
     .SYNOPSIS
         Create a new MISP Event
     .DESCRIPTION
@@ -9,8 +9,20 @@ function New-MispEvent {
         Take the provided details and use these to create a new Event in MISP
     .PARAMETER Context
         PSCustomObject with containing the MISP Context
-    .PARAMETER Event
-        Id of a specific event
+    .PARAMETER Info
+        Name/Description of the Event
+    .PARAMETER ThreatLevel
+        Threat Level of the event. One of [High, Medium, Low, Undefined]
+    .PARAMETER Analysis
+        Analysis State for the Event. One of [Initial, Ongoing, Complete]. Defaults to 'Initial'
+    .PARAMETER Distribution
+        Distribution Level for the Event. One of [Organisation, Community, Connected, All, Group, Inherit]. Defaults to 'Organisation'
+    .PARAMETER Published
+        Boolean value as to whether the event should be published. Defaults to false.
+    .PARAMETER Attribute
+        Array of Attributes to attach ot the event. Each attribute consist of a Value and Type at minimum, and may include IPs, hostnames, file hashes, etc.
+    .PARAMETER Organisation
+        Name or Id of organisation to associate the event to. If not specified, will use the first local organisation on the MISP Platform.
     .INPUTS
         [PsCustomObject]    -> Context
         [Int]               -> Id
@@ -30,30 +42,33 @@ function New-MispEvent {
   [CmdletBinding(SupportsShouldProcess)]
 
   param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [PsCustomObject]$Context,
 
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string]$Info,
 
-    [Parameter(Mandatory=$true)]
-    [ValidateSet("High","Medium","Low","Undefined")]
+    [Parameter(Mandatory = $true)]
+    [ValidateSet("High", "Medium", "Low", "Undefined")]
     [string]$ThreatLevel,
 
-    [Parameter(Mandatory=$false)]
-    [ValidateSet("Initial","Ongoing","Complete")]
+    [Parameter(Mandatory = $false)]
+    [ValidateSet("Initial", "Ongoing", "Complete")]
     [string]$Analysis = "Initial",
 
-    [Parameter(Mandatory=$false)]
-    [ValidateSet("Organisation","Community","Connected","All","Group","Inherit")]
+    [Parameter(Mandatory = $false)]
+    [ValidateSet("Organisation", "Community", "Connected", "All", "Group", "Inherit")]
     [string]$Distribution = "Organisation",
 
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory = $false)]
     [System.Boolean]$Published = $false,
 
-    [Parameter(Mandatory=$false)]
-    [array] $Attribute
-    )
+    [Parameter(Mandatory = $false)]
+    [array] $Attribute,
+
+    [Parameter(Mandatory = $false)]
+    [string]$Organisation
+  )
 
   Begin {
     $Me = $MyInvocation.MyCommand.Name
@@ -65,25 +80,25 @@ function New-MispEvent {
     $Uri.Path = [io.path]::combine($Uri.Path, "events")
 
     $ThreatLevelMap = @{
-      High = 1
-      Medium = 2
-      Low = 3
+      High      = 1
+      Medium    = 2
+      Low       = 3
       Undefined = 4
     }
 
     $AnalysisMap = @{
-      Initial = 0
-      Ongoing = 1
+      Initial  = 0
+      Ongoing  = 1
       Complete = 2
     }
 
     $DistributionMap = @{
       Organisation = 0      # Your organisation only
-      Community = 1         # This community only
-      Connected = 2         # Connected Communities
-      All = 3               # All communities
-      Group = 4             # Sharing Group
-      Inherit = 5           # Inherit Event
+      Community    = 1         # This community only
+      Connected    = 2         # Connected Communities
+      All          = 3               # All communities
+      Group        = 4             # Sharing Group
+      Inherit      = 5           # Inherit Event
     }
   }
 
@@ -91,16 +106,37 @@ function New-MispEvent {
 
     # Build up the Event Body
     $EventBody = [pscustomobject]@{
-      date = (Get-Date).ToString("yyyy-MM-dd")
+      date            = (Get-Date).ToString("yyyy-MM-dd")
       threat_level_id = $ThreatLevelMap.($ThreatLevel)
-      info = $Info
-      published = $Published
-      analysis = $AnalysisMap.($Analysis)
-      distribution = $DistributionMap.($Distribution)
+      info            = $Info
+      published       = $Published
+      analysis        = $AnalysisMap.($Analysis)
+      distribution    = $DistributionMap.($Distribution)
+    }
+
+    if ($PSBoundParameters.ContainsKey('Organisation')) {
+      # Check if the organisation is an Integer or something else
+      $OrganisationId = 0
+      if ([int]::TryParse($Organisation, [ref]$OrganisationId)) {
+        # Integer ID, check for existence
+        $Org = Get-MispOrganisation -Context $Context -Id $OrganisationId
+        if (-not $Org) {
+          throw ('Organisation does not exist in MISP: {0}' -f $Organisation)
+        }
+      }
+      else {
+        # Not an integer, try a name match
+        $Org = Get-MispOrganisation -Context $Context -Name $Organisation
+        if (-not $Org) {
+          Write-Verbose ('Organisation Name not found in MISP: {0}' -f $Organisation)
+          $Org = New-MispOrganisation -Context $Context -Name $Organisation
+        }
+      }
+      $EventBody | Add-Member -MemberType NoteProperty -Name 'org_id' -Value $Org.id
     }
 
     # If attributes were supplied, add these too
-    if($MyInvocation.BoundParameters.ContainsKey("Attribute")) {
+    if ($MyInvocation.BoundParameters.ContainsKey("Attribute")) {
       $EventBody | Add-Member -MemberType NoteProperty -Name 'Attribute' -Value $Attribute
     }
 
@@ -108,6 +144,7 @@ function New-MispEvent {
 
     If ($PSCmdlet.ShouldProcess("Create new MISP Event")) {
       # Call the API
+      #Write-Output $EventBody | ConvertTo-Json -depth 10
       $Response = Invoke-MispRestMethod -Context $Context -Uri $Uri -Method "POST" -Body $EventBody
     }
 
