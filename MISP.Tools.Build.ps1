@@ -9,7 +9,7 @@ param(
   [Parameter(Mandatory=$False)]
   [string]$CertificateLocation = 'MY',
 
-  [Parameter(Mandatory=$False)]  [Parameter(Mandatory=$False)]
+  [Parameter(Mandatory=$False)]
   [string]$KeyVaultURL = 'https://azmb-kv01.vault.azure.net/',
 
   [Parameter(Mandatory=$False)]
