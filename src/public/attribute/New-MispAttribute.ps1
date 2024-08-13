@@ -1,6 +1,6 @@
 # Set MISP API Key/URI Context
 function New-MispAttribute {
-    <#
+  <#
     .SYNOPSIS
         Construct a new MISP Attribute(s)
     .DESCRIPTION
@@ -64,67 +64,70 @@ function New-MispAttribute {
   [CmdletBinding(SupportsShouldProcess)]
 
   param (
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory = $false)]
     [ValidateSet("Internal reference", "Targeting data", "Antivirus detection", "Payload delivery", "Artifacts dropped", "Payload installation", "Persistence mechanism", "Network activity", `
-      "Payload type", "Attribution", "External analysis", "Financial fraud", "Support Tool", "Social network", "Person", "Other")]
+        "Payload type", "Attribution", "External analysis", "Financial fraud", "Support Tool", "Social network", "Person", "Other")]
     [string]$Category = "Other",
 
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [ValidateSet("md5", "sha1", "sha256", "filename", "pdb", "filename|md5", "filename|sha1", "filename|sha256", "ip-src", "ip-dst", "hostname", "domain", "domain|ip", "email", "email-src", `
-      "eppn", "email-dst", "email-subject", "email-attachment", "email-body", "float", "git-commit-id", "url", "http-method", "user-agent", "ja3-fingerprint-md5", "jarm-fingerprint", `
-      "favicon-mmh3", "hassh-md5", "hasshserver-md5", "regkey", "regkey|value", "AS", "snort", "bro", "zeek", "community-id", "pattern-in-file", "pattern-in-traffic", "pattern-in-memory", `
-      "pattern-filename", "pgp-public-key", "pgp-private-key", "yara", "stix2-pattern", "sigma", "gene", "kusto-query", "mime-type", "identity-card-number", "cookie", "vulnerability", "cpe",
-      "weakness", "attachment", "malware-sample", "link", "comment", "text", "hex", "other", "named pipe", "mutex", "process-state", "target-user", "target-email", "target-machine", "target-org",
-      "target-location", "target-external", "btc", "dash", "xmr", "iban", "bic", "bank-account-nr", "aba-rtn", "bin", "cc-number", "prtn", "phone-number", "threat-actor", "campaign-name", "campaign-id", `
-      "malware-type", "uri", "authentihash", "vhash", "ssdeep", "imphash", "telfhash", "pehash", "impfuzzy", "sha224", "sha384", "sha512", "sha512/224", "sha512/256", "sha3-224", "sha3-256", "sha3-384", `
-      "sha3-512", "tlsh", "cdhash", "filename|authentihash", "filename|vhash", "filename|ssdeep", "filename|imphash", "filename|impfuzzy", "filename|pehash", "filename|sha224", "filename|sha384", `
-      "filename|sha512", "filename|sha512/224", "filename|sha512/256", "filename|sha3-224", "filename|sha3-256", "filename|sha3-384", "filename|sha3-512", "filename|tlsh", "windows-scheduled-task", `
-      "windows-service-name", "windows-service-displayname", "whois-registrant-email", "whois-registrant-phone", "whois-registrant-name", "whois-registrant-org", "whois-registrar", "whois-creation-date", `
-      "x509-fingerprint-sha1", "x509-fingerprint-md5", "x509-fingerprint-sha256", "dns-soa-email", "size-in-bytes", "counter", "datetime", "port", "ip-dst|port", "ip-src|port", "hostname|port", "mac-address", `
-      "mac-eui-64", "email-dst-display-name", "email-src-display-name", "email-header", "email-reply-to", "email-x-mailer", "email-mime-boundary", "email-thread-index", "email-message-id", "github-username", `
-      "github-repository", "github-organisation", "jabber-id", "twitter-id", "dkim", "dkim-signature", "first-name", "middle-name", "last-name", "full-name", "date-of-birth", "place-of-birth", "gender", `
-      "passport-number", "passport-country", "passport-expiration", "redress-number", "nationality", "visa-number", "issue-date-of-the-visa", "primary-residence", "country-of-residence", "special-service-request", `
-      "frequent-flyer-number", "travel-details", "payment-details", "place-port-of-original-embarkation", "place-port-of-clearance", "place-port-of-onward-foreign-destination", "passenger-name-record-locator-number", `
-      "mobile-application-id", "chrome-extension-id", "cortex", "boolean", "anonymised")]
+        "eppn", "email-dst", "email-subject", "email-attachment", "email-body", "float", "git-commit-id", "url", "http-method", "user-agent", "ja3-fingerprint-md5", "jarm-fingerprint", `
+        "favicon-mmh3", "hassh-md5", "hasshserver-md5", "regkey", "regkey|value", "AS", "snort", "bro", "zeek", "community-id", "pattern-in-file", "pattern-in-traffic", "pattern-in-memory", `
+        "pattern-filename", "pgp-public-key", "pgp-private-key", "yara", "stix2-pattern", "sigma", "gene", "kusto-query", "mime-type", "identity-card-number", "cookie", "vulnerability", "cpe",
+        "weakness", "attachment", "malware-sample", "link", "comment", "text", "hex", "other", "named pipe", "mutex", "process-state", "target-user", "target-email", "target-machine", "target-org",
+        "target-location", "target-external", "btc", "dash", "xmr", "iban", "bic", "bank-account-nr", "aba-rtn", "bin", "cc-number", "prtn", "phone-number", "threat-actor", "campaign-name", "campaign-id", `
+        "malware-type", "uri", "authentihash", "vhash", "ssdeep", "imphash", "telfhash", "pehash", "impfuzzy", "sha224", "sha384", "sha512", "sha512/224", "sha512/256", "sha3-224", "sha3-256", "sha3-384", `
+        "sha3-512", "tlsh", "cdhash", "filename|authentihash", "filename|vhash", "filename|ssdeep", "filename|imphash", "filename|impfuzzy", "filename|pehash", "filename|sha224", "filename|sha384", `
+        "filename|sha512", "filename|sha512/224", "filename|sha512/256", "filename|sha3-224", "filename|sha3-256", "filename|sha3-384", "filename|sha3-512", "filename|tlsh", "windows-scheduled-task", `
+        "windows-service-name", "windows-service-displayname", "whois-registrant-email", "whois-registrant-phone", "whois-registrant-name", "whois-registrant-org", "whois-registrar", "whois-creation-date", `
+        "x509-fingerprint-sha1", "x509-fingerprint-md5", "x509-fingerprint-sha256", "dns-soa-email", "size-in-bytes", "counter", "datetime", "port", "ip-dst|port", "ip-src|port", "hostname|port", "mac-address", `
+        "mac-eui-64", "email-dst-display-name", "email-src-display-name", "email-header", "email-reply-to", "email-x-mailer", "email-mime-boundary", "email-thread-index", "email-message-id", "github-username", `
+        "github-repository", "github-organisation", "jabber-id", "twitter-id", "dkim", "dkim-signature", "first-name", "middle-name", "last-name", "full-name", "date-of-birth", "place-of-birth", "gender", `
+        "passport-number", "passport-country", "passport-expiration", "redress-number", "nationality", "visa-number", "issue-date-of-the-visa", "primary-residence", "country-of-residence", "special-service-request", `
+        "frequent-flyer-number", "travel-details", "payment-details", "place-port-of-original-embarkation", "place-port-of-clearance", "place-port-of-onward-foreign-destination", "passenger-name-record-locator-number", `
+        "mobile-application-id", "chrome-extension-id", "cortex", "boolean", "anonymised")]
     [string] $Type,
 
-    [Parameter(Mandatory=$false)]
-    [ValidateSet("Organisation","Community","Connected","All","Group","Inherit")]
+    [Parameter(Mandatory = $false)]
+    [ValidateSet("Organisation", "Community", "Connected", "All", "Group", "Inherit")]
     [string]$Distribution = "Organisation",
 
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string] $Comment,
 
-    [Parameter(Mandatory=$true)]
-    [string] $Value
-    )
+    [Parameter(Mandatory = $true)]
+    [string] $Value,
+
+    [Parameter(Mandatory = $false)]
+    [boolean] $toIds = $false
+  )
 
   Begin {
     $Me = $MyInvocation.MyCommand.Name
 
-    Write-Verbose "$($Me): Build New MISP Attribute(s)"
+    Write-Verbose ('{0}: Build New MISP Attribute(s)' -f $Me)
 
     $DistributionMap = @{
       Organisation = 0      # Your organisation only
-      Community = 1         # This community only
-      Connected = 2         # Connected Communities
-      All = 3               # All communities
-      Group = 4             # Sharing Group
-      Inherit = 5           # Inherit Event
+      Community    = 1      # This community only
+      Connected    = 2      # Connected Communities
+      All          = 3      # All communities
+      Group        = 4      # Sharing Group
+      Inherit      = 5      # Inherit Event
     }
-}
+  }
 
   Process {
 
     if ($PSCmdlet.ShouldProcess("Construct New MISP Attribute")) {
       # Build the Attribute Body
       $Attribute = @{
-        type = $Type
-        category = $Category
+        type         = $Type
+        category     = $Category
         distribution = $DistributionMap.($Distribution)
-        to_ids = $true
-        comment = $Comment
-        value = $Value
+        to_ids       = $toIds
+        comment      = $Comment
+        value        = $Value
       }
 
       # Return all for the events

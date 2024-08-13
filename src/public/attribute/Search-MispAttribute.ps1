@@ -1,6 +1,6 @@
 # Set MISP API Key/URI Context
 function Search-MispAttribute {
-    <#
+  <#
     .SYNOPSIS
         Search for MISP Event(s)
     .DESCRIPTION
@@ -43,16 +43,16 @@ function Search-MispAttribute {
 
   [CmdletBinding(
     SupportsShouldProcess,
-    ConfirmImpact="Low"
+    ConfirmImpact = "Low"
   )]
 
   param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [PsCustomObject]$Context,
 
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [hashtable]$Search
-    )
+  )
 
   Begin {
     $Me = $MyInvocation.MyCommand.Name
