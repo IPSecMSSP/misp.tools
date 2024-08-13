@@ -1,6 +1,6 @@
 # Set MISP API Key/URI Context
 function Search-MispAttribute {
-    <#
+  <#
     .SYNOPSIS
         Search for MISP Event(s)
     .DESCRIPTION
@@ -38,21 +38,21 @@ function Search-MispAttribute {
         Return matching attributes
     .LINK
         https://www.circl.lu/doc/misp/automation/#search
-        https://url.to.repo/repo/path/
+        https://github.com/IPSecMSSP/misp.tools
     #>
 
   [CmdletBinding(
     SupportsShouldProcess,
-    ConfirmImpact="Low"
+    ConfirmImpact = "Low"
   )]
 
   param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [PsCustomObject]$Context,
 
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [hashtable]$Search
-    )
+  )
 
   Begin {
     $Me = $MyInvocation.MyCommand.Name

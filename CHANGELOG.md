@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated Signing to use Azure Key Vault to sign code
+
 ## [1.0.2] - 2023-04-19
 
 ### Fixed

@@ -37,7 +37,7 @@ function Get-MispWarningList {
         PS> $WarningLists = Get-MispWarningList -Context $MispContext -Criteria $Criteria
         Return Enabled Warning Lists
     .LINK
-        https://url.to.repo/repo/path/
+        https://github.com/IPSecMSSP/misp.tools
         https://www.circl.lu/doc/misp/automation/#warninglists-api
     #>
 

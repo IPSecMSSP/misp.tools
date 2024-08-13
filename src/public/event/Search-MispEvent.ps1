@@ -34,7 +34,7 @@ function Search-MispEvent {
         Return matching events
     .LINK
         https://www.circl.lu/doc/misp/automation/#search
-        https://url.to.repo/repo/path/
+        https://github.com/IPSecMSSP/misp.tools
     #>
 
   [CmdletBinding(

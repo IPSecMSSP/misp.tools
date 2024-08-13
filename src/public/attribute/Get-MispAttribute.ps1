@@ -1,6 +1,6 @@
 # Set MISP API Key/URI Context
 function Get-MispAttribute {
-    <#
+  <#
     .SYNOPSIS
         Get MISP Attribute(s)
     .DESCRIPTION
@@ -23,24 +23,24 @@ function Get-MispAttribute {
         PS> $Event = Get-MispAttribute -Context $MispContext -Id 1234
         Return details for attribute 1234
     .LINK
-        https://url.to.repo/repo/path/
+        https://github.com/IPSecMSSP/misp.tools
         https://www.circl.lu/doc/misp/automation/#attribute-management
     #>
 
   [CmdletBinding()]
 
   param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [PsCustomObject]$Context,
 
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory = $false)]
     [Int]$Id
-    )
+  )
 
   Begin {
     $Me = $MyInvocation.MyCommand.Name
 
-    Write-Verbose "$($Me): Get MISP Attribute(s)"
+    Write-Verbose ('{0}: Get MISP Attribute(s)' -f $Me)
 
     # If we don't "Clone" the UriBuilder object from the Context, the Context's instance of the BaseUri gets updated. We do not want that.
     $Uri = [System.UriBuilder]$Context.BaseUri.ToString()
@@ -60,7 +60,8 @@ function Get-MispAttribute {
     if ($MyInvocation.BoundParameters.ContainsKey("Id")) {
       # Only a single event was requested
       Write-Output $Response.Attribute
-    } else {
+    }
+    else {
       # Return all fo the events
       Write-Output $Response
     }
