@@ -22,7 +22,11 @@ function New-MispEvent {
     .PARAMETER Attribute
         Array of Attributes to attach ot the event. Each attribute consist of a Value and Type at minimum, and may include IPs, hostnames, file hashes, etc.
     .PARAMETER Organisation
-        Name or Id of organisation to associate the event to. If not specified, will use the first local organisation on the MISP Platform.
+        Name or Id of organisation to associate the event to. This will be uses as the "Creator Organisation".
+
+        If not specified, will use the Organisation of the User creating the Event.
+
+        The Owner Organisation is always the Organisation of the user creating the event.
     .INPUTS
         [PsCustomObject]    -> Context
         [Int]               -> Id
@@ -124,6 +128,13 @@ function New-MispEvent {
           throw ('Organisation does not exist in MISP: {0}' -f $Organisation)
         }
       }
+      elseif ($Organisation -match '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$') {
+        # Id is a UUID
+        $Org = Get-MispOrganisation -Context $Context -Id $Organisation
+        if (-not $Org) {
+          throw ('Organisation does not exist in MISP: {0}' -f $Organisation)
+        }
+      }
       else {
         # Not an integer, try a name match
         $Org = Get-MispOrganisation -Context $Context -Name $Organisation
@@ -132,12 +143,13 @@ function New-MispEvent {
           $Org = New-MispOrganisation -Context $Context -Name $Organisation
         }
       }
-      $EventBody | Add-Member -MemberType NoteProperty -Name 'org_id' -Value $Org.id
+      # When setting the Creator Org for an event, the back-end checks the value of orgc.uuid, so pass the whole Org object
+      $EventBody | Add-Member -MemberType NoteProperty -Name 'orgc' -Value $Org
     }
 
     # If attributes were supplied, add these too
     if ($MyInvocation.BoundParameters.ContainsKey("Attribute")) {
-      $EventBody | Add-Member -MemberType NoteProperty -Name 'Attribute' -Value $Attribute
+      $EventBody | Add-Member -MemberType NoteProperty -Name 'attribute' -Value $Attribute
     }
 
     Write-Debug "Event Body:`n$($EventBody | ConvertTo-Json -Depth 10)"
