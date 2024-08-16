@@ -134,7 +134,7 @@ function New-MispAttribute {
   Process {
 
     If ($PSCmdlet.ParameterSetName -eq 'UseSaneDefaults') {
-      $TypeMapping = Get-MispAttributeTypes -Context $Context
+      $TypeMapping = Get-MispAttributeType -Context $Context
       $Category = $TypeMapping.sane_defaults.$Type.default_category
       $toIds = $TypeMapping.sane_defaults.$Type.to_ids
     }

@@ -1,4 +1,4 @@
-function Get-MispAttributeTypes {
+function Get-MispAttributeType {
   <#
     .SYNOPSIS
       Retrieve available Attribute Type information from MISP Instance
