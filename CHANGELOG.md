@@ -7,9 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.4] - 2024-08-16
+
+### Added
+
+- Publish-MispEvent
+- Unpublis-MispEvent
+- Update-MispEvent
+- Get-MispAttributeType
+- Add-MispAttributeToEvent
+- New-MispOrganisation
+- Update-MispOrgaisation
+- Get-MispOrganisation
+
 ### Changed
 
 - Updated Signing to use Azure Key Vault to sign code
+- Added Organisation support to New-MispEvent
 
 ## [1.0.2] - 2023-04-19
 
