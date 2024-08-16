@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Signing to use Azure Key Vault to sign code
 - Added Organisation support to New-MispEvent
+- Set Comment parameter on New-MispAttribute as not mandatory
 
 ## [1.0.2] - 2023-04-19
 
