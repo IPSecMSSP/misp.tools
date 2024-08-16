@@ -52,9 +52,9 @@ function New-MispEvent {
     [Parameter(Mandatory = $true)]
     [string]$Info,
 
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $false)]
     [ValidateSet("High", "Medium", "Low", "Undefined")]
-    [string]$ThreatLevel,
+    [string]$ThreatLevel = "Undefined",
 
     [Parameter(Mandatory = $false)]
     [ValidateSet("Initial", "Ongoing", "Complete")]
@@ -149,7 +149,7 @@ function New-MispEvent {
 
     # If attributes were supplied, add these too
     if ($MyInvocation.BoundParameters.ContainsKey("Attribute")) {
-      $EventBody | Add-Member -MemberType NoteProperty -Name 'attribute' -Value $Attribute
+      $EventBody | Add-Member -MemberType NoteProperty -Name 'Attribute' -Value $Attribute
     }
 
     Write-Debug "Event Body:`n$($EventBody | ConvertTo-Json -Depth 10)"
