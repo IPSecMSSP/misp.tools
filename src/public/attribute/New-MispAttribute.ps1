@@ -151,11 +151,11 @@ function New-MispAttribute {
       }
 
       if ($PSBoundParameters.ContainsKey('FirstSeen')) {
-        $Attribute.first_seen = ([System.DateTimeOffset]$FirstSeen).ToUnixTimeMilliSeconds()
+        $Attribute.first_seen = $FirstSeen.ToUniversalTime().ToString("o")
       }
 
       if ($PSBoundParameters.ContainsKey('LastSeen')) {
-        $Attribute.last_seen = ([System.DateTimeOffset]$LastSeen).ToUnixTimeMilliSeconds()
+        $Attribute.last_seen = $LastSeen.ToUniversalTime().ToString("o")
       }
 
       # Return all for the events
