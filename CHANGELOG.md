@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2024-08-19
+
+### Added
+
+- Get-MispGalaxy
+- Get-MispGalaxyCluster
+
 ## [1.1.4] - 2024-08-16
 
 ### Added
