@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.1] - 2024-08-20
+
+### Added
+
+- Add-MispGalaxyClusterToObject
+
+### Changed
+
+- New-MispAttribute support for "Correlate" parameter, defaulting to true
+
 ## [1.2.0] - 2024-08-19
 
 ### Added
