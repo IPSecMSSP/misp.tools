@@ -113,7 +113,10 @@ function New-MispAttribute {
     [datetime] $FirstSeen,
 
     [Parameter(Mandatory = $false)]
-    [datetime] $LastSeen
+    [datetime] $LastSeen,
+
+    [Parameter(Mandatory = $false)]
+    [System.Boolean]$Correlate = $true
   )
 
   Begin {
@@ -148,6 +151,7 @@ function New-MispAttribute {
         to_ids       = $toIds
         comment      = $Comment
         value        = $Value
+        correlate    = $Correlate
       }
 
       if ($PSBoundParameters.ContainsKey('FirstSeen')) {
@@ -160,6 +164,7 @@ function New-MispAttribute {
 
       # Return all for the events
       Write-Output $Attribute
+      Write-Debug ($Attribute | ConvertTo-Json)
     }
   }
 
